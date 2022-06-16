@@ -1,0 +1,29 @@
+//----- constantes ----//
+// paleta colores
+$primary-color-dark: #303F9F;
+$primary-color: #3F51B5;
+$primary-color-light: #C5CAE9;
+$primary-color-text: #FFFFFF;
+$accent-color: #4CAF50;
+
+$divider-color: #BDBDBD;
+$naranja: #F66B0E;
+
+// texto
+$primary-text-color: #212121;
+$secondary-text-color: #757575;
+
+// fondos
+$fondoDegrade2Colores: linear-gradient(135deg, $primary-color-dark 52%, $primary-color-light 100%);
+
+//Otros
+$sombra: 0 1px 3px -1px rgba(0, 0, 0, .2), 0 3px 10px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+$sombraGde: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+
+$bordeRedondeado: 5px;
+
+//----- clases ----//
+.tituloGral {
+  font-size: 3rem;
+  color: $primary-text-color;
+}

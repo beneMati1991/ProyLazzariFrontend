@@ -1,0 +1,30 @@
+@import "assets/scss/variables";
+@font-face {
+  font-family: 'PTSans';
+  src: url('assets/fonts/PTSans-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: PTSans, "Helvetica Neue", sans-serif;
+  background: rgb(4,37,58);
+  background: $fondoDegrade2Colores
+}
+
+
+.contenedorGral {
+  padding: 2%;
+  width: 100%;
+}
+.footerLZ {
+    position:fixed;
+    bottom:0px;
+    width:100%;
+}

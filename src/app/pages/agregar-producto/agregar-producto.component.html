@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>Agregar producto</h2>
+  <!--<form class="mt-4" [formGroup]="crearProducto" (submit)="agregarProducto()">-->
+  <form class="mt-4" [formGroup]="crearProducto">
+    <mat-form-field class="fullWidth" class="fullWidth">
+      <mat-label>Nombre</mat-label>
+      <input matInput placeholder="Nombre" formControlName="nombre">
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+      <mat-label>Marca</mat-label>
+      <input matInput placeholder="Marca" formControlName="marca">
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+      <mat-label>Unidad de Medida</mat-label>
+      <mat-select formControlName="unidadMedidaId">
+        <mat-option>-- Seleccione --</mat-option>
+        <mat-option *ngFor="let unidad of unidades" [value]="unidad.id">{{unidad.abreviatura}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+      <mat-label>Detalle</mat-label>
+      <input matInput placeholder="Detalle" formControlName="detalle">
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+      <mat-label>Cantidad</mat-label>
+      <input matInput placeholder="Cantidad" formControlName="cantidad">
+    </mat-form-field>
+    <mat-form-field class="fullWidth">
+      <mat-label>Precio</mat-label>
+      <input matInput placeholder="Precio" formControlName="precio">
+    </mat-form-field>
+
+    <input type="file" placeholder="Imagen">
+    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+      <div></div>
+      <div style="display: flex; justify-content: space-between; width: 50%">
+        <button class="dialogButton" mat-dialog-close mat-raised-button color="warn">Cancelar</button>
+        <!--<button type="submit" [disabled]="crearProducto.invalid" class="dialogButton" [mat-dialog-close]="crearProducto.value" mat-raised-button color="accent">{{data.buttonLabel}}</button>-->
+        <button mat-button [disabled]="crearProducto.invalid" (click)="agregarProducto()" mat-raised-button
+          color="accent">Crear</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,13 @@
+@import "src/assets/scss/variables";
+.user {
+    border-top: 0.84375em solid white;
+    text-align: right;
+  }
+.contenedorPpal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+ border-bottom: 1px solid white;
+}

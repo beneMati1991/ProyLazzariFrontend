@@ -1,0 +1,142 @@
+<div class="contenedorGral">
+  <h1 style="color: white">Registro del Comercio</h1>
+  <form [formGroup]="crearComercioForm" class="newCommerce-form" (submit)="crearComercio()">
+    <h2 style="margin: 0">Datos del Usuario</h2>
+    <div class="formRow">
+
+      <mat-form-field class="userFormControl">
+        <mat-label>Nombre de Usuario</mat-label>
+        <input matInput placeholder="Nombre de Usuario" formControlName="nombreUsuario" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="userFormControl">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Password" formControlName="password" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+    </div>
+    <h2 style="margin: 0">Datos del Comercio</h2>
+    <div class="formRow">
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Nombre de Comercio</mat-label>
+        <input matInput placeholder="Nombre del Comercio" formControlName="nombre" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Razón Social</mat-label>
+        <input matInput placeholder="Razón Social" formControlName="razonSocial" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>CUIT</mat-label>
+        <input matInput placeholder="CUIT" formControlName="cuit" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <!--<mat-form-field class="commerceFormControl" >
+        <mat-label>Logo</mat-label>
+        <input matInput placeholder="Logo del Comercio">
+        <input matInput placeholder="Logo del Comercio" formControlName="imgLogo" required>
+         <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> 
+      </mat-form-field>-->
+    </div>
+    <div class="formRow" formGroupName="domicilio">
+      <!--<mat-form-field class="commerceFormControl">
+        <mat-label>Provincia</mat-label>
+        <input matInput placeholder="Provincia" formControlName="provincia" required>-->
+      <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      <!--</mat-form-field>-->
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Provincia</mat-label>
+        <mat-select formControlName="provincia" required (selectionChange)="getLocalidades($event)">
+          <mat-option>-- Seleccione --</mat-option>
+          <mat-option *ngFor="let provincia of provincias" [value]="provincia">{{provincia.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Localidad</mat-label>
+        <mat-select formControlName="localidad" required (selectionChange)="getMunicipios($event)">
+          <mat-option>-- Seleccione --</mat-option>
+          <mat-option *ngFor="let localidad of localidades" [value]="localidad">{{localidad.nombre}}</mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <!--<mat-form-field class="commerceFormControl">
+        <mat-label>Localidad</mat-label>
+        <input matInput placeholder="Localidad" formControlName="localidad" required>-->
+      <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      <!--</mat-form-field>-->
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Municipio</mat-label>
+        <mat-select formControlName="municipio" required>
+          <mat-option>-- Seleccione --</mat-option>
+          <mat-option *ngFor="let municipio of municipios" [value]="municipio">{{municipio.nombre}}</mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <!--<mat-form-field class="commerceFormControl">
+        <mat-label>Municipio</mat-label>
+        <input matInput placeholder="Municipio" formControlName="municipio" required>-->
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      <!--</mat-form-field>-->
+    </div>
+    <div class="formRow" formGroupName="domicilio">
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Direccion</mat-label>
+        <input matInput placeholder="Direccion" formControlName="calle" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Numero</mat-label>
+        <input matInput placeholder="Numero" formControlName="altura" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+    </div>
+    <h2 style="margin: 0">Datos del Responsable</h2>
+    <div class="formRow">
+      <!--<mat-form-field class="commerceFormControl" >
+        <mat-label>Rubro</mat-label>
+        <mat-select formControlName="heading">
+          <mat-option *ngFor="let rubro of headingOptionsLocal" [value]="rubro.name">
+            {{rubro.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>-->
+
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Nombre de Contacto</mat-label>
+        <input matInput placeholder="Nombre de Contacto" formControlName="nombreContacto" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Teléfono</mat-label>
+        <input matInput placeholder="Teléfono" formControlName="telefono" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
+    </div>
+    <div class="btnGuardar">
+      <button type="submit" [disabled]="crearComercioForm.invalid" mat-raised-button color="accent">
+        Guardar
+      </button>
+    </div>
+  </form>
+
+
+</div>

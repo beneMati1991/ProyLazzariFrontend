@@ -1,0 +1,8 @@
+<div class="contenedorPpal">
+  <img src="assets/img/logoLazzariD.png" style="width: 15%; height: auto" alt="">
+  <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Hola {{user.unique_name}}</button>
+  <mat-menu #menu="matMenu">
+    <button *ngIf="userEdit != 'Desconocido'" mat-menu-item (click)="editarComercioRef()">Editar perfil</button>
+    <button mat-menu-item (click)="LogOut()" routerLink="/">Salir</button>
+  </mat-menu>
+</div>

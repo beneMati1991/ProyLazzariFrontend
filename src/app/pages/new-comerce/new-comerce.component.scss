@@ -1,0 +1,25 @@
+@import "src/assets/scss/variables";
+.formRow {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.newCommerce-form{
+  padding: 2%;
+  background-color: white;
+  box-shadow: $sombraGde;
+  border-radius: $bordeRedondeado;
+}
+.commerceFormControl{
+  width: 24%;
+}
+.userFormControl {
+  width: 49%;
+}
+.btnGuardar{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+

@@ -1,0 +1,35 @@
+<div class="contenedor">
+  <div class="logo">
+    <img style="width: 100%; height: auto" src="assets/img/logoLazzariD.png" alt="">
+  </div>
+  <div style="display: flex; align-items: center; justify-content:  center">
+    <div class="login">
+      <div>
+        <h1 class="tituloGral" style="text-align: center; padding-top: 3%">Bienvenido</h1>
+        <div style="padding: 3%">
+          <form [formGroup]="loginForm" class="example-form" (submit)="login()">
+            <mat-form-field class="example-full-width">
+              <mat-label>Usuario</mat-label>
+              <input matInput placeholder="Ingrese su usuario" autocomplete="new-user" formControlName="nombre"
+                required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+              <mat-label>Contraseña</mat-label>
+              <input matInput placeholder="Contraseña" type="password" autocomplete="new-pass"
+                formControlName="contrasenia" required>
+            </mat-form-field>
+            <button type="submit" [disabled]="loginForm.invalid" mat-raised-button color="accent" class="botonGral"
+              style="width: 100%">
+              Ingresar
+            </button>
+          </form>
+          <div style="display: flex; justify-content: space-around; width: 100%; margin-top: 2rem;">
+            <div class="link">Olvidó su Contraseña</div>
+            <div class="link" (click)="newCommerce()">Nuevo Comercio</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
