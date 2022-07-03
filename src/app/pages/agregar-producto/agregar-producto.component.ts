@@ -7,6 +7,7 @@ import { Unidad } from '../../models/unidad.model';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { CredentialsService } from '../../services/credentials.service';
+import { StorageService } from '../../services/storage.service';
 
 export interface IDialogProductData {
   product?: IproductoList;
@@ -22,6 +23,7 @@ export class AgregarProductoComponent implements OnInit {
   crearProducto: FormGroup;
   submitted = false;
   unidades: Unidad[] = [];
+  image: any;
 
   constructor(
     private productoService: ProductoService,
@@ -29,7 +31,8 @@ export class AgregarProductoComponent implements OnInit {
     private fb: FormBuilder,
     private toastr: ToastrService,
     public dialog: MatDialog,
-    private credentialsService: CredentialsService
+    private credentialsService: CredentialsService,
+    private storageService: StorageService
   ) {
     this.crearProducto = this.fb.group({
       nombre: ['', Validators.required],
@@ -39,7 +42,7 @@ export class AgregarProductoComponent implements OnInit {
       cantidad: [''],
       precio: ['', Validators.required],
       //imagen:[data.product?.imagen ? data.product.imagen : '']
-      imagen: 'sin imagen',
+      //imagen: 'sin imagen',
     });
 
     this.unidadService.getUnidades().subscribe((x: any) => {
@@ -51,19 +54,32 @@ export class AgregarProductoComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  agregarProducto() {
+  async agregarProducto() {
     this.submitted = true;
+    let img: any;
+
+    if(this.image != undefined) {
+      await this.storageService.subirImagen(
+        this.credentialsService.getSession('CID') + '_' + this.crearProducto.value.nombre +
+          '_' + Date.now(),
+        this.image
+      ).then(urlImagen => {
+        console.log(urlImagen);
+        img = urlImagen;
+      });
+    }
 
     if (this.crearProducto.invalid) {
       return;
     }
+
     var producto: IproductoList = {
       nombre: this.crearProducto.value.nombre,
       marca: this.crearProducto.value.marca,
       detalle: this.crearProducto.value.detalle,
       cantidad: this.crearProducto.value.cantidad,
       precio: this.crearProducto.value.precio,
-      imagen: this.crearProducto.value.imagen,
+      imagen: img,
       unidadMedidaId: this.crearProducto.value.unidadMedidaId,
     };
 
@@ -75,7 +91,6 @@ export class AgregarProductoComponent implements OnInit {
       )
       .subscribe(
         (x: any) => {
-          console.log(x);
           this.dialog.closeAll();
           this.toastr.success('Producto creado');
         },
@@ -84,5 +99,17 @@ export class AgregarProductoComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  onFileSelected(event: any) {
+    let archivos = event.target.files;
+    let reader = new FileReader();
+
+    reader.readAsDataURL(archivos[0]);
+    reader.onloadend = () => {
+      console.log(reader.result);
+      this.image = reader.result;
+    };
+
   }
 }

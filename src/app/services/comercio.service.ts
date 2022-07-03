@@ -49,6 +49,7 @@ export class ComercioService {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   });
+  console.log(editadoComercio)
     return this.http.put(comercioUrl, JSON.stringify(editadoComercio), {
       headers: headers,
     });

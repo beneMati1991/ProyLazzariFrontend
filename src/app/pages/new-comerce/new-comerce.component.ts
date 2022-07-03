@@ -61,16 +61,17 @@ export class NewComerceComponent implements OnInit {
         unique_name: 'Desconocido',
       });
     }
-    this.datosGeoService.getProvincias().subscribe((x: any) => {
-      for (var val of x) {
-        this.provincias.push(val);
-      }
-    });
   }
 
   ngOnInit(): void {
     if (this.credentialsService.getSession('token') != null) {
       this.router.navigateByUrl('/listado');
+    } else {
+      this.datosGeoService.getProvincias().subscribe((x: any) => {
+        for (var val of x) {
+          this.provincias.push(val);
+        }
+      });
     }
   }
 
@@ -108,25 +109,29 @@ export class NewComerceComponent implements OnInit {
     );
   }
 
-  getLocalidades(evento: any) {
-    this.provincia = evento.value.id;
+  getMunicipiosDepartamento(evento: any) {
+    //reestablezco listas.
     this.localidades = [];
     this.municipios = [];
-    this.datosGeoService.getLocalidades(evento.value.id).subscribe((x: any) => {
-      for (var val of x) {
-        this.localidades.push(val);
-      }
-    });
+
+    if (evento.value != undefined) {
+      this.provincia = evento.value.id;
+      this.datosGeoService
+        .getDepartamentos(this.provincia)
+        .subscribe((x: any) => {
+          this.municipios = x;
+        });
+    }
   }
 
-  getMunicipios(evento: any) {
-    this.municipios = [];
-    this.datosGeoService
-      .getMunicipios(this.provincia, evento.value.id)
-      .subscribe((x: any) => {
-        for (var val of x) {
-          this.municipios.push(val);
-        }
-      });
+  getLocalidades(evento: any) {
+    this.localidades = [];
+    if (evento.value != undefined) {
+      this.datosGeoService
+        .getMunicipios(evento.value.provincia.nombre, evento.value.nombre)
+        .subscribe((x: any) => {
+          this.localidades = x;
+        });
+    }
   }
 }

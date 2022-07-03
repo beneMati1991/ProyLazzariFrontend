@@ -19,15 +19,15 @@ export class DatosGeograficosService {
     return this.http.get(this.datosGeoUrl);
   }
 
-  getLocalidades(provinciaId: number) {
-    return this.http.get(this.datosGeoUrl + `/${provinciaId}/departamentos`);
+  getDepartamentos(provincia: any) {
+    return this.http.get(this.datosGeoUrl + `/${provincia}/departamentos`);
   }
 
-  getLocalidades2(provinciaId: number): Observable<any> {
-    return this.http.get(this.datosGeoUrl + `/${provinciaId}/departamentos`);
+  getLocalidades2(provincia: any): Observable<any> {
+    return this.http.get(this.datosGeoUrl + `/${provincia}/departamentos`);
   }
 
-  getMunicipios(provinciaId: number, localidadId: number) {
-    return this.http.get(this.datosGeoUrl + `/${provinciaId}/departamentos/${localidadId}/localidades`);
+  getMunicipios(provincia: any, departamento: any) {
+    return this.http.get(this.datosGeoUrl + `/${provincia}/departamentos/${departamento}/localidades`);
   }
 }

@@ -30,7 +30,10 @@
       <input matInput placeholder="Precio" formControlName="precio">
     </mat-form-field>
 
-    <input type="file" placeholder="Imagen">
+    <input type="file" accept=".png, .jpg, .jpeg" (change)="onFileSelected($event)" id="inputFile">
+    <label for="inputFile" class="labelInputFile">
+      <img src="assets/img/upload.png" alt="upload file">
+    </label>
     <div style="display: flex; justify-content: space-between; margin-top: 10px;">
       <div></div>
       <div style="display: flex; justify-content: space-between; width: 50%">

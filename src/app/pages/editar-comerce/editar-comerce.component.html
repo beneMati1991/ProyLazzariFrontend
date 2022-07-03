@@ -44,52 +44,42 @@
 
       <mat-form-field class="commerceFormControl">
         <mat-label>Provincia</mat-label>
-        <mat-select formControlName="provincia" required (selectionChange)="getLocalidades($event)">
+        <mat-select formControlName="provincia" required (selectionChange)="getMunicipiosDepartamento($event)">
           <mat-option>-- Seleccione --</mat-option>
           <mat-option *ngFor="let provincia of provincias" [value]="provincia.nombre">{{provincia.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <!-- <mat-form-field class="commerceFormControl">
-        <mat-label>Localidad</mat-label>
-        <input matInput placeholder="Localidad" formControlName="localidad" required>
-      </mat-form-field> -->
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Municipio</mat-label>
+        <mat-select formControlName="municipio" required (selectionChange)="getLocalidades($event)">
+          <mat-option>-- Seleccione --</mat-option>
+          <mat-option *ngFor="let municipio of municipios" [value]="municipio.nombre">{{municipio.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <mat-form-field class="commerceFormControl">
         <mat-label>Localidad</mat-label>
-        <mat-select formControlName="localidad" required (selectionChange)="getMunicipios($event)">
+        <mat-select formControlName="localidad" required>
           <mat-option>-- Seleccione --</mat-option>
           <mat-option *ngFor="let localidad of localidades" [value]="localidad.nombre">{{localidad.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>
+    </div>
 
-      <!-- <mat-form-field class="commerceFormControl">
-        <mat-label>Municipio</mat-label>
-        <input matInput placeholder="Municipio" formControlName="municipio" required>
-      </mat-form-field> -->
+    <div class="formRow" formGroupName="domicilio">
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Direccion</mat-label>
+        <input matInput placeholder="Direccion" formControlName="calle" required>
+        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
+      </mat-form-field>
 
       <mat-form-field class="commerceFormControl">
-        <mat-label>Municipio</mat-label>
-        <mat-select formControlName="municipio" required>
-          <mat-option>-- Seleccione --</mat-option>
-          <mat-option *ngFor="let municipio of municipios" [value]="municipio.nombre">{{municipio.nombre}}</mat-option>
-        </mat-select>
+        <mat-label>Numero</mat-label>
+        <input matInput placeholder="Numero" formControlName="altura" required>
         <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
       </mat-form-field>
     </div>
-    <div class="formRow" formGroupName="domicilio">
-        <mat-form-field class="commerceFormControl" >
-          <mat-label>Direccion</mat-label>
-          <input matInput placeholder="Direccion" formControlName="calle" required>
-    <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
-    </mat-form-field>
-  
-        <mat-form-field class="commerceFormControl" >
-          <mat-label>Numero</mat-label>
-          <input matInput placeholder="Numero" formControlName="altura" required>
-    <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
-    </mat-form-field>
-      </div>
     <h2 style="margin: 0">Datos del Responsable</h2>
     <div class="formRow">
       <mat-form-field class="commerceFormControl">
@@ -114,7 +104,7 @@
       <button mat-dialog-close mat-raised-button color="warn" (click)="cancelarComercio()">
         Cancelar
       </button>
-      <button type="submit" [disabled]="editarComercioForm.invalid" mat-raised-button color="accent"
+      <button [disabled]="editarComercioForm.invalid" mat-raised-button color="accent"
         (click)="editarComercio()">
         Guardar
       </button>

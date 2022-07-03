@@ -9,6 +9,7 @@ import { UnidadService } from 'src/app/services/unidad.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { CredentialsService } from '../../services/credentials.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 export interface IDialogProductData {
   product?: IProduct;
@@ -25,6 +26,8 @@ export class EditarProductoComponent implements OnInit {
   editarProducto: FormGroup;
   unidades: Unidad[] = [];
   unidadId: number = 0;
+  image: any;
+  loadimagen: any;
 
   constructor(
     private productoService: ProductoService,
@@ -33,6 +36,7 @@ export class EditarProductoComponent implements OnInit {
     private unidadService: UnidadService,
     public dialog: MatDialog,
     private credentialsService: CredentialsService,
+    private storageService: StorageService,
     @Inject(MAT_DIALOG_DATA) public data: IDialogProductData
   ) {
     this.editarProducto = this.fb.group({
@@ -57,8 +61,8 @@ export class EditarProductoComponent implements OnInit {
         data.product?.precio ? data.product.precio : '',
         Validators.required,
       ],
-      //imagen:[data.product?.imagen ? data.product.imagen : '']
-      imagen: 'sin imagen',
+      imagen:[data.product?.imagen]
+      //imagen: 'sin imagen',
     });
 
     this.unidadService.getUnidades().subscribe((x: any) => {
@@ -66,13 +70,30 @@ export class EditarProductoComponent implements OnInit {
         this.unidades.push(val);
       }
     });
+
+    this.loadimagen = data.product?.imagen;
   }
 
   ngOnInit(): void {}
 
-  editProducto() {
+  async editProducto() {
     if (this.editarProducto.invalid) {
       return;
+    }
+
+    let img: any;
+
+    if(this.image != undefined) {
+      await this.storageService.subirImagen(
+        this.credentialsService.getSession('CID') + '_' + this.editarProducto.value.nombre +
+          '_' + Date.now(),
+        this.image
+      ).then(urlImagen => {
+        console.log(urlImagen);
+        img = urlImagen;
+      });
+    }else{
+      img = this.editarProducto.value.imagen;
     }
 
     for (var i of this.unidades) {
@@ -87,7 +108,7 @@ export class EditarProductoComponent implements OnInit {
       detalle: this.editarProducto.value.detalle,
       cantidad: this.editarProducto.value.cantidad,
       precio: this.editarProducto.value.precio,
-      imagen: this.editarProducto.value.imagen,
+      imagen: img,
       unidadMedidaId: this.unidadId,
     };
 
@@ -110,5 +131,16 @@ export class EditarProductoComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  onFileSelected(event: any) {
+    let archivos = event.target.files;
+    let reader = new FileReader();
+
+    reader.readAsDataURL(archivos[0]);
+    reader.onloadend = () => {
+      console.log(reader.result);
+      this.image = reader.result;
+    };
   }
 }

@@ -28,3 +28,41 @@ body {
     bottom:0px;
     width:100%;
 }
+
+input[type="file"]{
+  display: none;
+}
+
+.labelInputFile{
+  width: 4rem;
+  height: 4rem;
+  background-color: lightblue;
+  border-radius: 100%;
+  padding: 1rem;
+  box-shadow: 0 0 10px -1px gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.labelInputFile img{
+  width: 3rem;
+  height: 3rem;
+}
+
+.labelInputFile:active{
+  transform: scale(0.9);
+}
+
+.imgListado {
+  max-width: 8rem;
+  max-height: 8rem;
+  width: 100%;
+  height: 100%;
+}
+
+.mag-pag{
+  margin-top: 5px;
+}

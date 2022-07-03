@@ -26,14 +26,11 @@ import { DatosGeograficosService } from '../../services/datos-geograficos.servic
 })
 export class EditarComerceComponent implements OnInit {
   provincias: any;
-  provinciaId: number = 0;
   localidades: Localidad[] = [];
-  localidadId: number = 0;
+  localidadNom: any;
   municipios: Municipio[] = [];
-  municipioId: number = 0;
+  municipioNom: any;
   logged: boolean = false;
-  //CID: any;
-  //Id: any;
   comercio: ComercioObject = {
     nombreDeUsuario: '',
     nombre: '',
@@ -47,7 +44,6 @@ export class EditarComerceComponent implements OnInit {
 
   editarComercioForm = new FormGroup({
     nombreDeUsuario: new FormControl(''),
-    //password: new FormControl(''),
     nombre: new FormControl(''),
     razonSocial: new FormControl(''),
     cuit: new FormControl(''),
@@ -77,23 +73,27 @@ export class EditarComerceComponent implements OnInit {
 
   ngOnInit(): void {
     this.datosGeoService.getProvincias2().subscribe((x: Provincia) => {
+      let n: number;
+      n = setTimeout(function () { /* snip */  }, 500) as unknown as number;
       this.provincias = x;
-      var provinciaLoad = this.provincias.filter((p: Provincia) => p.nombre == this.comercio.domicilio.provincia)
-      this.provinciaId = provinciaLoad[0].id
-      
-      this.datosGeoService.getLocalidades(this.provinciaId).subscribe((l: any) => {
-        this.localidades = l;
-        var localidadLoad = this.localidades.filter((lo: Localidad) => lo.nombre == this.comercio.domicilio.localidad);
-        this.localidadId = localidadLoad[0].id
+      var provinciaLoad = this.provincias.filter(
+        (p: Provincia) => p.nombre == this.comercio.domicilio.provincia
+      );
 
-        this.datosGeoService.getMunicipios(this.provinciaId, this.localidadId).subscribe((u:any) => {
-          this.municipios = u;
-          var municipioLoad = this.municipios.filter((mu: any) => mu.nombre == this.comercio.domicilio.municipio)
-          this.municipioId = municipioLoad[0].id;
-        })
-      })
+      this.datosGeoService
+        .getDepartamentos(provinciaLoad[0].id)
+        .subscribe((mun: any) => {
+          this.municipios = mun;
+          var municipioLoad = this.municipios.filter(
+            (mu: any) => mu.nombre == this.comercio.domicilio.municipio
+          );
+          this.datosGeoService
+            .getMunicipios(provinciaLoad[0].nombre, municipioLoad[0].nombre)
+            .subscribe((u: any) => {
+              this.localidades = u;
+            });
+        });
     });
-
 
     this.comercioService
       .getComercio(
@@ -104,6 +104,7 @@ export class EditarComerceComponent implements OnInit {
       .subscribe(
         (x: any) => {
           this.comercio = x;
+          console.log(x);
 
           this.editarComercioForm = this.fb.group({
             nombreDeUsuario: [
@@ -141,12 +142,13 @@ export class EditarComerceComponent implements OnInit {
   }
 
   cancelarComercio() {
-    this.dataService.logged.next(true);
+    //this.dataService.logged.next(true);
     this.router.navigateByUrl('/listado');
   }
 
   editarComercio() {
     console.log(this.editarComercioForm.value);
+
     this.comercioService
       .editarComercio(
         this.editarComercioForm.value,
@@ -166,30 +168,38 @@ export class EditarComerceComponent implements OnInit {
       );
   }
 
- 
-
-  getLocalidades(evento: any) {
-    var prov = this.provincias.filter((p: Provincia) => p.nombre == evento.value);
-    this.provinciaId = prov[0].id
+  getMunicipiosDepartamento(evento: any) {
     this.localidades = [];
     this.municipios = [];
-    this.datosGeoService.getLocalidades(this.provinciaId).subscribe((x: any) => {
-      for (var val of x) {
-        this.localidades.push(val);
-      }
-    });
+
+    console.log(evento);
+
+    if (evento.value != undefined) {
+      var prov = this.provincias.filter(
+        (p: Provincia) => p.nombre == evento.value
+      );
+
+      this.datosGeoService.getDepartamentos(prov[0].id).subscribe((x: any) => {
+        this.municipios = x;
+      });
+    }
   }
 
-  getMunicipios(evento: any) {
-    var loc = this.localidades.filter((loc: Localidad) => loc.nombre == evento.value);
-    this.localidadId = loc[0].id
-    this.municipios = [];
-    this.datosGeoService
-      .getMunicipios(this.provinciaId, this.localidadId)
-      .subscribe((x: any) => {
-        for (var val of x) {
-          this.municipios.push(val);
-        }
-      });
+  getLocalidades(evento: any) {
+    this.localidades = [];
+
+    if (evento.value != undefined) {
+      var mon = this.municipios.filter((mo: any) => mo.nombre == evento.value);
+      this.localidadNom = mon[0].nombre;
+
+      this.datosGeoService
+        .getMunicipios(
+          this.editarComercioForm.value.domicilio.provincia,
+          this.localidadNom
+        )
+        .subscribe((x: any) => {
+          this.localidades = x;
+        });
+    }
   }
 }

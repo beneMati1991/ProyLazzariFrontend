@@ -52,42 +52,29 @@
 
       <mat-form-field class="commerceFormControl">
         <mat-label>Provincia</mat-label>
-        <mat-select formControlName="provincia" required (selectionChange)="getLocalidades($event)">
+        <mat-select formControlName="provincia" required (selectionChange)="getMunicipiosDepartamento($event)">
           <mat-option>-- Seleccione --</mat-option>
           <mat-option *ngFor="let provincia of provincias" [value]="provincia">{{provincia.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field class="commerceFormControl">
-        <mat-label>Localidad</mat-label>
-        <mat-select formControlName="localidad" required (selectionChange)="getMunicipios($event)">
-          <mat-option>-- Seleccione --</mat-option>
-          <mat-option *ngFor="let localidad of localidades" [value]="localidad">{{localidad.nombre}}</mat-option>
-        </mat-select>
-        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
-      </mat-form-field>
-
-      <!--<mat-form-field class="commerceFormControl">
-        <mat-label>Localidad</mat-label>
-        <input matInput placeholder="Localidad" formControlName="localidad" required>-->
-      <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
-      <!--</mat-form-field>-->
-
-      <mat-form-field class="commerceFormControl">
         <mat-label>Municipio</mat-label>
-        <mat-select formControlName="municipio" required>
+        <mat-select formControlName="municipio" required (selectionChange)="getLocalidades($event)">
           <mat-option>-- Seleccione --</mat-option>
           <mat-option *ngFor="let municipio of municipios" [value]="municipio">{{municipio.nombre}}</mat-option>
         </mat-select>
-        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
       </mat-form-field>
 
-      <!--<mat-form-field class="commerceFormControl">
-        <mat-label>Municipio</mat-label>
-        <input matInput placeholder="Municipio" formControlName="municipio" required>-->
-        <!-- <mat-error *ngIf="newCommerceForm.touched">tocaste al usuario</mat-error> -->
-      <!--</mat-form-field>-->
+      <mat-form-field class="commerceFormControl">
+        <mat-label>Localidad</mat-label>
+        <mat-select formControlName="localidad" required>
+          <mat-option>-- Seleccione --</mat-option>
+          <mat-option *ngFor="let localidad of localidades" [value]="localidad">{{localidad.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+
     <div class="formRow" formGroupName="domicilio">
       <mat-form-field class="commerceFormControl">
         <mat-label>Direccion</mat-label>
